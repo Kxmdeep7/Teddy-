@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>With Intention</title>
+    <title>A Silent Companion</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Lora:ital,wght@1,400&display=swap');
 
@@ -17,6 +17,7 @@
             overflow: hidden; position: fixed;
         }
 
+        /* Ambient Nebula Background */
         .nebula {
             position: fixed; inset: -50%; width: 200%; height: 200%; z-index: -1;
             background: 
@@ -28,11 +29,11 @@
         }
 
         #app-container {
-            width: 88%; max-width: 340px; min-height: 460px;
+            width: 88%; max-width: 340px; min-height: 480px;
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 35px; padding: 30px 22px;
+            border-radius: 35px; padding: 35px 22px;
             text-align: center; display: flex; flex-direction: column;
             justify-content: space-between; align-items: center;
             box-shadow: 0 25px 50px rgba(0,0,0,0.3);
@@ -41,19 +42,25 @@
         .stage { display: none; width: 100%; animation: fadeIn 0.8s ease-out; }
         .stage.active { display: block; }
 
-        .teddy-hero { font-size: 70px; display: block; margin-bottom: 10px; animation: floating 3s ease-in-out infinite; }
+        /* HEARTBEAT PULSE ANIMATION */
+        .teddy-hero { 
+            font-size: 75px; 
+            display: block; 
+            margin-bottom: 15px; 
+            animation: heartbeat 2s ease-in-out infinite; 
+        }
+
         .main-text { font-size: 20px; color: #fff; margin-bottom: 10px; letter-spacing: 0.5px; }
         .sub-text { font-family: 'Lora', serif; font-style: italic; font-size: 15px; color: rgba(255,255,255,0.75); line-height: 1.6; }
 
         .btn {
-            margin-top: 15px; padding: 15px 30px;
+            margin-top: 20px; padding: 15px 30px;
             background: linear-gradient(90deg, #FFD700, #FFB6C1);
             border: none; border-radius: 50px; color: #4a3c00;
             font-family: 'Fredoka One', cursive; font-size: 12px; cursor: pointer;
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
 
-        /* NOTE BOX STYLE */
         #note-box {
             margin-top: 20px; padding: 22px 18px;
             background: rgba(255, 255, 255, 0.05);
@@ -62,8 +69,25 @@
             width: 100%;
         }
 
+        /* Coming Soon Hint */
+        .coming-soon {
+            margin-top: 25px;
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.3);
+            letter-spacing: 2px;
+            cursor: pointer;
+        }
+
         @keyframes fadeIn { 0% { opacity: 0; transform: translateY(10px); } 100% { opacity: 1; transform: translateY(0); } }
-        @keyframes floating { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            14% { transform: scale(1.1); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.1); }
+            70% { transform: scale(1); }
+        }
+
         @keyframes moveNebula { 100% { transform: rotate(360deg); } }
     </style>
 </head>
@@ -75,35 +99,40 @@
         
         <div class="stage active" id="step1">
             <span class="teddy-hero">🧸</span>
-            <p class="main-text">The Softest Record</p>
-            <p class="sub-text">A little hug, just for you.
-            No rush, no noise—
-            ready whenever you are.</p>
-            <button class="btn" onclick="nextStep(2)">OPEN THE HUG</button>
+            <p class="main-text">A Silent Companion</p>
+            <p class="sub-text">A little friend for your space.
+            He’s here to hold the things
+            I want to say even when 
+            it's quiet.</p>
+            <button class="btn" onclick="nextStep(2)">SEE WHAT HE'S HOLDING</button>
         </div>
 
         <div class="stage" id="step2">
-            <span class="teddy-hero">🫂</span>
-            <p class="main-text">With Care</p>
-            <p class="sub-text">I’ve learned that a hug
-            doesn't always need words.
-            Sometimes it's just about 
-            being steady and present.</p>
-            <button class="btn" onclick="nextStep(3)">THE FINAL RECORD</button>
+            <span class="teddy-hero">✨</span>
+            <p class="main-text">The Guardian</p>
+            <p class="sub-text">Some things are better
+            kept safe than spoken.
+            This is about being steady,
+            reliable, and always here.</p>
+            <button class="btn" onclick="nextStep(3)">OPEN THE MESSAGE</button>
         </div>
 
         <div class="stage" id="step3">
             <span class="teddy-hero">✉️</span>
             <p class="main-text">Reserved for You</p>
-            <p class="sub-text">I’m saving a real hug for you—
-            one that feels exactly 
-            the way you need it to.</p>
+            <p class="sub-text">He's been guarding this 
+            specifically for you.
+            A truth you can keep.</p>
             
             <div id="note-box" onclick="revealNote()">
                 <p id="note-text" style="color: #FFD700; font-size: 14px; font-family: 'Lora', serif; font-style: italic;">Note for your heart... 👆</p>
             </div>
             
-            <p style="margin-top: 20px; font-size: 10px; color: #FFB6C1; letter-spacing: 2px;">WITH INTENTION, DEEP</p>
+            <div class="coming-soon" onclick="alert('Our private corner... opening soon.')">
+                🔒 PRIVATE SPACE [LOCKED]
+            </div>
+
+            <p style="margin-top: 20px; font-size: 9px; color: #FFB6C1; letter-spacing: 2px; opacity: 0.6;">WITH INTENTION, DEEP</p>
         </div>
     </div>
 
@@ -117,7 +146,6 @@
             const box = document.getElementById('note-box');
             const text = document.getElementById('note-text');
             
-            // Your raw, sincere words translated
             text.innerHTML = `You don't have to ask for it. It's yours by right since the first day.\n\nI have no greed or hidden expectations from you.\n\nYou know yourself—have I ever asked for anything other than just being by your side?`;
             
             text.style.color = "#fff";
