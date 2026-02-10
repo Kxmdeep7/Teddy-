@@ -10,100 +10,82 @@
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         
         body { 
-            background: #fdfaf6;
+            background: #0c0605;
             height: 100vh;
+            width: 100vw;
             display: flex; justify-content: center; align-items: center;
             font-family: 'Fredoka One', cursive;
             overflow: hidden;
-            perspective: 1000px;
+            position: fixed; /* Prevents bounce scrolling on iOS */
         }
 
-        /* THE NEBULA BACKGROUND - No Solid Colors */
+        /* DYNAMIC NEBULA BACKGROUND */
         .nebula {
-            position: fixed;
-            inset: -50%;
-            width: 200%;
-            height: 200%;
-            z-index: -1;
+            position: fixed; inset: -50%; width: 200%; height: 200%; z-index: -1;
             background: 
-                radial-gradient(circle at 30% 30%, rgba(255, 215, 0, 0.4), transparent 40%),
-                radial-gradient(circle at 70% 20%, rgba(135, 206, 235, 0.4), transparent 40%),
-                radial-gradient(circle at 50% 80%, rgba(230, 230, 250, 0.5), transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(255, 182, 193, 0.4), transparent 40%);
-            filter: blur(60px);
-            animation: moveNebula 20s linear infinite;
+                radial-gradient(circle at 30% 30%, rgba(255, 215, 0, 0.3), transparent 40%),
+                radial-gradient(circle at 70% 20%, rgba(135, 206, 235, 0.3), transparent 40%),
+                radial-gradient(circle at 50% 80%, rgba(230, 230, 250, 0.4), transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 182, 193, 0.3), transparent 40%);
+            filter: blur(50px);
+            animation: moveNebula 15s linear infinite;
         }
 
-        @keyframes moveNebula {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+        @keyframes moveNebula { 100% { transform: rotate(360deg); } }
 
-        /* FLOATING GLASS STAGE */
+        /* COMPACT GLASS STAGE */
         #app-container {
-            width: 85%; max-width: 380px;
-            background: rgba(255, 255, 255, 0.2);
+            width: 88%; 
+            max-width: 350px;
+            /* Shorter height to ensure fit */
+            min-height: 420px;
+            background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
-            border: 2px solid rgba(255, 255, 255, 0.4);
-            border-radius: 40px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.05);
-            padding: 40px 25px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 30px;
+            padding: 25px 20px;
             text-align: center;
-            transition: transform 0.5s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Spreads elements out evenly */
+            align-items: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
         }
 
-        .stage { display: none; animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .stage { display: none; width: 100%; animation: popIn 0.6s ease-out; }
         .stage.active { display: block; }
 
         .teddy-hero {
-            font-size: 110px; display: block; margin-bottom: 25px;
+            font-size: 85px; /* Sized down to fit */
+            display: block; 
+            margin-bottom: 15px;
             animation: floating 4s ease-in-out infinite;
-            filter: drop-shadow(0 15px 15px rgba(0,0,0,0.1));
         }
 
         .main-text {
-            font-size: 24px; color: #4a3c00; margin-bottom: 15px; line-height: 1.3;
-            text-shadow: 0 2px 4px rgba(255,255,255,0.5);
+            font-size: 20px; color: #fff; margin-bottom: 10px; line-height: 1.2;
         }
 
         .sub-text {
             font-family: 'Lora', serif; font-style: italic;
-            font-size: 16px; color: #555; line-height: 1.6;
+            font-size: 14px; color: rgba(255,255,255,0.8); line-height: 1.5;
         }
 
-        /* UNICORN SPARKLE BUTTON */
         .btn {
-            margin-top: 35px; padding: 18px 35px;
+            margin-top: 20px; padding: 15px 30px;
             background: linear-gradient(90deg, #FFD700, #FFB6C1);
             border: none; border-radius: 50px;
-            color: #fff; font-family: 'Fredoka One', cursive;
-            font-size: 15px; letter-spacing: 1px; cursor: pointer;
-            box-shadow: 0 10px 20px rgba(255, 182, 193, 0.4);
-            transition: 0.3s; text-transform: uppercase;
-        }
-        .btn:active { transform: scale(0.95); }
-
-        /* ANIMATIONS */
-        @keyframes popIn {
-            0% { transform: scale(0.8); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
+            color: #4a3c00; font-family: 'Fredoka One', cursive;
+            font-size: 13px; cursor: pointer;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
         }
 
-        @keyframes floating {
-            0%, 100% { transform: translateY(0) rotate(-3deg); }
-            50% { transform: translateY(-20px) rotate(3deg); }
-        }
+        @keyframes popIn { 0% { opacity: 0; transform: scale(0.9); } 100% { opacity: 1; transform: scale(1); } }
+        @keyframes floating { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
-        .sparkle {
-            position: absolute; pointer-events: none;
-            animation: sparkleAnim 1.5s linear forwards;
-        }
-
-        @keyframes sparkleAnim {
-            0% { transform: scale(0); opacity: 1; }
-            100% { transform: scale(1.5) translateY(-50px); opacity: 0; }
-        }
+        .sparkle { position: absolute; pointer-events: none; animation: sparkleAnim 1s linear forwards; }
+        @keyframes sparkleAnim { 0% { transform: scale(0); opacity: 1; } 100% { transform: scale(1.5) translateY(-30px); opacity: 0; } }
     </style>
 </head>
 <body>
@@ -116,28 +98,28 @@
             <span class="teddy-hero">🧸</span>
             <p class="main-text">A little hug, just for you...</p>
             <p class="sub-text">Quiet, soft, and waiting — ready when you are.</p>
-            <button class="btn" onclick="nextStep(2)">Touch the Teddy</button>
+            <button class="btn" onclick="nextStep(2)">TOUCH THE TEDDY</button>
         </div>
 
         <div class="stage" id="step2">
             <span class="teddy-hero">✨🧸✨</span>
             <p class="main-text">Every hug carries warmth...</p>
             <p class="sub-text">a little comfort, a little love that doesn’t need words.</p>
-            <button class="btn" onclick="nextStep(3)">Get Your Hug</button>
+            <button class="btn" onclick="nextStep(3)">GET YOUR HUG</button>
         </div>
 
         <div class="stage" id="step3">
             <span class="teddy-hero">🫂</span>
             <p class="main-text">This hug is yours!</p>
-            <p class="sub-text">Wrapped in calm and care. Just this moment.</p>
-            <button class="btn" onclick="nextStep(4)">One more thing...</button>
+            <p class="sub-text">Wrapped in calm and care. Nothing forced. Just this moment.</p>
+            <button class="btn" onclick="nextStep(4)">ONE MORE THING...</button>
         </div>
 
         <div class="stage" id="step4">
             <span class="teddy-hero">🦄💖</span>
             <p class="main-text">Only for you.</p>
             <p class="sub-text">Whenever you need it, this hug will be here. Always yours.</p>
-            <p style="margin-top: 25px; font-size: 13px; color: #db7093; letter-spacing: 2px;">WITH INTENTION, DEEP</p>
+            <p style="margin-top: 20px; font-size: 11px; color: #FFB6C1; letter-spacing: 2px;">WITH INTENTION, DEEP</p>
         </div>
 
     </div>
@@ -146,11 +128,7 @@
         function nextStep(step) {
             document.querySelectorAll('.stage').forEach(s => s.classList.remove('active'));
             document.getElementById('step' + step).classList.add('active');
-            
-            // Add sparkles on transition
-            for(let i=0; i<10; i++) {
-                setTimeout(createSparkle, i * 100);
-            }
+            for(let i=0; i<8; i++) setTimeout(createSparkle, i * 100);
         }
 
         function createSparkle() {
@@ -159,10 +137,9 @@
             s.className = 'sparkle';
             s.innerHTML = colors[Math.floor(Math.random() * colors.length)];
             s.style.left = Math.random() * 80 + 10 + '%';
-            s.style.top = Math.random() * 80 + 10 + '%';
-            s.style.fontSize = Math.random() * 20 + 10 + 'px';
+            s.style.top = '40%';
             document.getElementById('app-container').appendChild(s);
-            setTimeout(() => s.remove(), 1500);
+            setTimeout(() => s.remove(), 1000);
         }
     </script>
 </body>
