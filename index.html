@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>A Hug in Pixels</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Lora:ital,wght@0,400;1,400&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        body { 
+            background: linear-gradient(135deg, #fdfaf6 0%, #f7e9e9 100%);
+            color: #5a4646;
+            font-family: 'Lora', serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            transition: background 2s ease;
+        }
+
+        /* DYNAMIC TEXTURE OVERLAY */
+        .overlay {
+            position: fixed; inset: 0; pointer-events: none;
+            background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+            opacity: 0.3; z-index: 50;
+        }
+
+        /* 1. LANDING SCREEN */
+        #landing-screen {
+            height: 100vh; width: 100%; display: flex; flex-direction: column; 
+            justify-content: center; align-items: center; text-align: center;
+            padding: 20px; transition: opacity 1s ease;
+        }
+
+        .teddy-container {
+            font-size: 100px; cursor: pointer; position: relative;
+            animation: breathe 3s ease-in-out infinite;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.05));
+            user-select: none; transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .teddy-container:active { transform: scale(1.2); }
+
+        .start-btn {
+            margin-top: 40px; padding: 12px 25px; border: 1px solid #d4a3a3;
+            background: transparent; color: #d4a3a3; border-radius: 30px;
+            font-size: 11px; letter-spacing: 3px; cursor: pointer;
+            opacity: 0; animation: fadeIn 2s forwards 2s;
+        }
+
+        /* 2. JOURNEY SCREEN */
+        #journey-screen {
+            display: none; width: 100%;
+        }
+
+        .story-moment {
+            height: 100vh; display: flex; flex-direction: column; 
+            justify-content: center; align-items: center;
+            text-align: center; padding: 0 40px; opacity: 0; transform: translateY(30px);
+            transition: 2s all ease;
+        }
+
+        .story-moment.show { opacity: 1; transform: translateY(0); }
+        .story-text { font-size: 18px; line-height: 1.8; font-style: italic; max-width: 320px; white-space: pre-line; }
+
+        /* HEART PARTICLES */
+        .heart {
+            position: fixed; color: #d4a3a3; font-size: 15px; 
+            pointer-events: none; z-index: 10; animation: floatUp 4s linear forwards;
+        }
+
+        /* FINAL REVEAL */
+        #final-reveal {
+            height: 100vh; display: none; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center;
+            background: radial-gradient(circle, #fff0f0 0%, #f7e9e9 100%);
+        }
+
+        .final-msg {
+            font-family: 'Dancing Script', cursive; font-size: 28px;
+            color: #9e7e7e; line-height: 1.6; padding: 20px;
+        }
+
+        /* ANIMATIONS */
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes fadeIn { to { opacity: 1; } }
+
+        @keyframes floatUp {
+            to { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="overlay"></div>
+
+    <div id="landing-screen">
+        <p style="font-size: 14px; opacity: 0.6; margin-bottom: 20px;">A little hug, just for you…</p>
+        <div class="teddy-container" id="main-teddy" onclick="createHeart()">🧸</div>
+        <p style="font-style: italic; font-size: 16px; margin-top: 20px; max-width: 250px;">Quiet, soft, and waiting — ready when you are.</p>
+        <button class="start-btn" onclick="startJourney()">TOUCH THE TEDDY</button>
+    </div>
+
+    <div id="journey-screen">
+        <div class="story-moment">
+            <p class="story-text">Every hug carries a little warmth…
+            a little comfort…
+            a little love that doesn’t need words.</p>
+        </div>
+
+        <div class="story-moment">
+            <p class="story-text">This hug is yours…
+            Wrapped in calm, care, 
+            and a little bit of love.
+            
+            Nothing forced. Nothing rushed.
+            Just warmth, just presence, 
+            just this moment.</p>
+        </div>
+
+        <div class="story-moment">
+            <p class="story-text">Some moments don’t need words.
+            Some hugs say everything.
+            
+            This is one of those moments —
+            soft, quiet, and only for you.</p>
+        </div>
+
+        <div id="trigger-point" style="height: 50vh;"></div>
+    </div>
+
+    <div id="final-reveal">
+        <div class="teddy-container" style="font-size: 80px;">🧸👋</div>
+        <div class="final-msg">
+            Whenever you need it,<br>
+            this hug will be here.<br>
+            Always gentle, always warm,<br>
+            always yours to take.
+            <div style="font-family: 'Lora', serif; font-size: 11px; letter-spacing: 3px; margin-top: 30px; opacity: 0.5;">
+                WITH INTENTION, DEEP
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.top = '100vh';
+            heart.style.opacity = Math.random();
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 4000);
+        }
+
+        function startJourney() {
+            document.getElementById('landing-screen').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('landing-screen').style.display = 'none';
+                document.getElementById('journey-screen').style.display = 'block';
+                window.scrollTo(0, 0);
+            }, 1000);
+        }
+
+        window.addEventListener('scroll', () => {
+            const moments = document.querySelectorAll('.story-moment');
+            moments.forEach(m => {
+                const rect = m.getBoundingClientRect();
+                if (rect.top < window.innerHeight * 0.7) {
+                    m.classList.add('show');
+                }
+            });
+
+            const trigger = document.getElementById('trigger-point');
+            if (trigger && trigger.getBoundingClientRect().top < window.innerHeight * 0.5) {
+                document.getElementById('journey-screen').style.display = 'none';
+                document.getElementById('final-reveal').style.display = 'flex';
+                window.scrollTo(0, 0);
+                // Create shower of hearts for the end
+                for(let i=0; i<15; i++) setTimeout(createHeart, i * 200);
+            }
+        });
+    </script>
+</body>
+</html>
