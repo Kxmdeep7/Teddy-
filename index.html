@@ -10,81 +10,105 @@
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         
         body { 
-            /* Dynamic Unicorn/Minion inspired Gradient */
-            background: linear-gradient(45deg, #FFD700, #87CEEB, #E6E6FA, #FFB6C1);
-            background-size: 400% 400%;
-            animation: gradientBG 10s ease infinite;
+            background: #fdfaf6;
             height: 100vh;
             display: flex; justify-content: center; align-items: center;
-            font-family: 'Fredoka One', cursive; /* Fun, rounded font */
+            font-family: 'Fredoka One', cursive;
             overflow: hidden;
+            perspective: 1000px;
         }
 
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        /* THE NEBULA BACKGROUND - No Solid Colors */
+        .nebula {
+            position: fixed;
+            inset: -50%;
+            width: 200%;
+            height: 200%;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 30% 30%, rgba(255, 215, 0, 0.4), transparent 40%),
+                radial-gradient(circle at 70% 20%, rgba(135, 206, 235, 0.4), transparent 40%),
+                radial-gradient(circle at 50% 80%, rgba(230, 230, 250, 0.5), transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 182, 193, 0.4), transparent 40%);
+            filter: blur(60px);
+            animation: moveNebula 20s linear infinite;
         }
 
+        @keyframes moveNebula {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* FLOATING GLASS STAGE */
         #app-container {
-            width: 90%; max-width: 400px; height: 80vh;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(10px);
+            width: 85%; max-width: 380px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 255, 255, 0.4);
             border-radius: 40px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
-            text-align: center; padding: 30px;
-            position: relative;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.05);
+            padding: 40px 25px;
+            text-align: center;
+            transition: transform 0.5s ease;
         }
 
-        .stage { display: none; width: 100%; animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .stage { display: none; animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .stage.active { display: block; }
 
         .teddy-hero {
-            font-size: 100px; display: block; margin-bottom: 20px;
-            animation: wiggle 2s ease-in-out infinite;
-            cursor: pointer;
+            font-size: 110px; display: block; margin-bottom: 25px;
+            animation: floating 4s ease-in-out infinite;
+            filter: drop-shadow(0 15px 15px rgba(0,0,0,0.1));
         }
 
         .main-text {
-            font-size: 22px; color: #5c4d00; margin-bottom: 15px; line-height: 1.4;
+            font-size: 24px; color: #4a3c00; margin-bottom: 15px; line-height: 1.3;
+            text-shadow: 0 2px 4px rgba(255,255,255,0.5);
         }
 
         .sub-text {
             font-family: 'Lora', serif; font-style: italic;
-            font-size: 15px; color: #666; line-height: 1.6;
+            font-size: 16px; color: #555; line-height: 1.6;
         }
 
-        /* Fun Buttons */
+        /* UNICORN SPARKLE BUTTON */
         .btn {
-            margin-top: 30px; padding: 15px 30px;
-            background: #FFD700; border: none; border-radius: 50px;
-            color: #5c4d00; font-family: 'Fredoka One', cursive;
-            font-size: 14px; letter-spacing: 1px; cursor: pointer;
-            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
-            transition: 0.3s;
+            margin-top: 35px; padding: 18px 35px;
+            background: linear-gradient(90deg, #FFD700, #FFB6C1);
+            border: none; border-radius: 50px;
+            color: #fff; font-family: 'Fredoka One', cursive;
+            font-size: 15px; letter-spacing: 1px; cursor: pointer;
+            box-shadow: 0 10px 20px rgba(255, 182, 193, 0.4);
+            transition: 0.3s; text-transform: uppercase;
         }
-        .btn:active { transform: scale(0.9); }
+        .btn:active { transform: scale(0.95); }
 
-        /* Animations */
+        /* ANIMATIONS */
         @keyframes popIn {
-            0% { transform: scale(0.5); opacity: 0; }
+            0% { transform: scale(0.8); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
         }
 
-        @keyframes wiggle {
-            0%, 100% { transform: rotate(-5deg) scale(1); }
-            50% { transform: rotate(5deg) scale(1.1); }
+        @keyframes floating {
+            0%, 100% { transform: translateY(0) rotate(-3deg); }
+            50% { transform: translateY(-20px) rotate(3deg); }
         }
 
-        .confetti {
-            position: absolute; width: 10px; height: 10px; border-radius: 50%;
-            pointer-events: none; z-index: 100;
+        .sparkle {
+            position: absolute; pointer-events: none;
+            animation: sparkleAnim 1.5s linear forwards;
+        }
+
+        @keyframes sparkleAnim {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(1.5) translateY(-50px); opacity: 0; }
         }
     </style>
 </head>
 <body>
+
+    <div class="nebula"></div>
 
     <div id="app-container">
         
@@ -92,80 +116,53 @@
             <span class="teddy-hero">🧸</span>
             <p class="main-text">A little hug, just for you...</p>
             <p class="sub-text">Quiet, soft, and waiting — ready when you are.</p>
-            <button class="btn" onclick="nextStep(2)">TOUCH THE TEDDY</button>
+            <button class="btn" onclick="nextStep(2)">Touch the Teddy</button>
         </div>
 
         <div class="stage" id="step2">
-            <span class="teddy-hero" onclick="spawnConfetti(event)">✨🧸✨</span>
+            <span class="teddy-hero">✨🧸✨</span>
             <p class="main-text">Every hug carries warmth...</p>
             <p class="sub-text">a little comfort, a little love that doesn’t need words.</p>
-            <button class="btn" onclick="nextStep(3)">GET YOUR HUG</button>
+            <button class="btn" onclick="nextStep(3)">Get Your Hug</button>
         </div>
 
         <div class="stage" id="step3">
             <span class="teddy-hero">🫂</span>
             <p class="main-text">This hug is yours!</p>
-            <p class="sub-text">Wrapped in calm and care. Nothing forced. Just this moment.</p>
-            <button class="btn" onclick="nextStep(4)">ONE MORE THING...</button>
+            <p class="sub-text">Wrapped in calm and care. Just this moment.</p>
+            <button class="btn" onclick="nextStep(4)">One more thing...</button>
         </div>
 
         <div class="stage" id="step4">
             <span class="teddy-hero">🦄💖</span>
             <p class="main-text">Only for you.</p>
             <p class="sub-text">Whenever you need it, this hug will be here. Always yours.</p>
-            <p style="margin-top: 20px; font-size: 12px; color: #FF69B4;">WITH INTENTION, DEEP</p>
+            <p style="margin-top: 25px; font-size: 13px; color: #db7093; letter-spacing: 2px;">WITH INTENTION, DEEP</p>
         </div>
 
     </div>
 
     <script>
         function nextStep(step) {
-            // Hide all stages
             document.querySelectorAll('.stage').forEach(s => s.classList.remove('active'));
-            // Show current stage
             document.getElementById('step' + step).classList.add('active');
             
-            // Special effect for hug
-            if(step === 3) {
-                for(let i=0; i<20; i++) {
-                    setTimeout(spawnConfettiManual, i * 50);
-                }
-            }
-        }
-
-        function spawnConfetti(e) {
-            const colors = ['#FFD700', '#87CEEB', '#FF69B4', '#E6E6FA'];
+            // Add sparkles on transition
             for(let i=0; i<10; i++) {
-                const c = document.createElement('div');
-                c.className = 'confetti';
-                c.style.background = colors[Math.floor(Math.random() * colors.length)];
-                c.style.left = e.clientX + 'px';
-                c.style.top = e.clientY + 'px';
-                document.body.appendChild(c);
-                
-                const destX = (Math.random() - 0.5) * 200;
-                const destY = (Math.random() - 0.5) * 200;
-                
-                c.animate([
-                    { transform: 'translate(0, 0)', opacity: 1 },
-                    { transform: `translate(${destX}px, ${destY}px)`, opacity: 0 }
-                ], { duration: 1000, easing: 'ease-out' }).onfinish = () => c.remove();
+                setTimeout(createSparkle, i * 100);
             }
         }
 
-        function spawnConfettiManual() {
-            const colors = ['#FFD700', '#87CEEB', '#FF69B4', '#E6E6FA'];
-            const c = document.createElement('div');
-            c.className = 'confetti';
-            c.style.background = colors[Math.floor(Math.random() * colors.length)];
-            c.style.left = Math.random() * 100 + 'vw';
-            c.style.top = Math.random() * 100 + 'vh';
-            document.body.appendChild(c);
-            
-            c.animate([
-                { transform: 'scale(0)', opacity: 1 },
-                { transform: 'scale(2)', opacity: 0 }
-            ], { duration: 1500 }).onfinish = () => c.remove();
+        function createSparkle() {
+            const colors = ['✨', '⭐', '💖', '🌈'];
+            const s = document.createElement('div');
+            s.className = 'sparkle';
+            s.innerHTML = colors[Math.floor(Math.random() * colors.length)];
+            s.style.left = Math.random() * 80 + 10 + '%';
+            s.style.top = Math.random() * 80 + 10 + '%';
+            s.style.fontSize = Math.random() * 20 + 10 + 'px';
+            document.getElementById('app-container').appendChild(s);
+            setTimeout(() => s.remove(), 1500);
         }
     </script>
 </body>
